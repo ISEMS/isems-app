@@ -3,3 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+body, html, #root, .App {
+  min-height: 100vh
+}
