@@ -17,11 +17,11 @@
 // 17 Latitude;
 // 18 Longitude
 
+
 const parseData = data => {
   const lines = data.split("\n");
 
-  const actualLines = lines.filter(line => line !== "");
-  const converted = actualLines.map(line => {
+  const converted = lines.filter(line => line !== "").map(line => {
     try {
       return parseLine(line);
     } catch (error) {
