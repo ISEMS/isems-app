@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import NodeMap from "./Map";
 
 const fetchData = () => {
-  return fetch("http://10.36.158.33/ISEMS/ffopenmppt.log").then(response =>
+  return fetch("http://10.230.77.226/api/ISEMS/ffopenmppt.log").then(response =>
     response.text()
   );
 };
