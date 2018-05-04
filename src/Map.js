@@ -2,6 +2,7 @@ import React from "react";
 
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
+import {DateTime} from "luxon";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -10,6 +11,13 @@ L.Icon.Default.mergeOptions({
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
+
+
+const getFormattedDate = (epochString) => {
+  const seconds = parseInt(epochString, 10);
+  const dt = DateTime.fromMillis(seconds * 1000);
+  return dt.toLocaleString(DateTime.DATETIME_SHORT);
+}
 
 export default function NodeMap({ nodes }) {
   if (!nodes.length) {
@@ -21,6 +29,8 @@ export default function NodeMap({ nodes }) {
       <Popup>
         <div>
           <h1> {node.name}</h1>
+          <div><span className="title">Datum:</span>{getFormattedDate(node.timestamp)}</div>
+          <div><span className="title">Batterieladung:</span>{node.batteryChargeEstimate}</div>
           </div>
       </Popup>
     </Marker>
