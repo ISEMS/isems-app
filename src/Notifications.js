@@ -11,7 +11,7 @@ Noty.overrideDefaults({
 const toast = {
   error(text) { new Noty({text, type: "error"}).show() },
   success(text) { new Noty({text, type: "success"}).show() },
-  info(text) { console.log(text); new Noty({text, type: "success"}).show() },
+  info(text) { new Noty({text, type: "success"}).show() },
 }
 
 export default toast;
