@@ -9,10 +9,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NodeDetails from "./NodeDetails";
 
 const fetchData = () => {
-  const backendUrl =
-    process.env.REACT_APP_API_URL ||
-    "http://localhost:5000/measurements/latest";
-  return fetch(backendUrl)
+  const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const url = `${baseUrl}/measurements/latest`;
+  return fetch(url)
     .then(response => response.json())
     .then(json => json.measurements);
 };
