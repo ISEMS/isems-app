@@ -5,9 +5,13 @@ import "leaflet/dist/leaflet.css";
 import NodeMap from "./Map";
 
 import Notifications from "./Notifications";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import NodeDetails from "./NodeDetails";
 
 const fetchData = () => {
-  const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:5000/measurements/latest";
+  const backendUrl =
+    process.env.REACT_APP_API_URL ||
+    "http://localhost:5000/measurements/latest";
   return fetch(backendUrl)
     .then(response => response.json())
     .then(json => json.measurements);
@@ -28,15 +32,7 @@ class App extends Component {
     this.setData = this.setData.bind(this);
   }
 
-  setData(parsedData) {
-    const nodes = parsedData.map(node => {
-      return {
-        position: [node.latitude, node.longitude],
-        name: node.nodeId,
-        timestamp: new Date(node.timestamp),
-        batteryChargeEstimate: node.batteryChargeEstimate
-      };
-    });
+  setData(nodes) {
     this.setState({ nodes });
   }
 
@@ -55,7 +51,14 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">ISEMS Management</h1>
         </header>
-        <NodeMap nodes={this.state.nodes} />
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              <NodeMap nodes={this.state.nodes} />
+            </Route>
+            <Route path="/details/:nodeId" component={NodeDetails} />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }

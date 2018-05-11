@@ -18,3 +18,15 @@
   width: 100%;
   flex-grow: 1;
 }
+
+.charts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.chartGroup {
+  border: 1px solid lightgray;
+  margin-top: 2em;
+  display: grid;
+}

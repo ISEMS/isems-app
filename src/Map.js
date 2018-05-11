@@ -2,7 +2,7 @@ import React from "react";
 
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
-import {DateTime} from "luxon";
+import {getFormattedDate} from "./utils";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -13,31 +13,26 @@ L.Icon.Default.mergeOptions({
 });
 
 
-const getFormattedDate = (epochString) => {
-  const seconds = parseInt(epochString, 10);
-  const dt = DateTime.fromMillis(seconds * 1000);
-  return dt.toLocaleString(DateTime.DATETIME_SHORT);
-}
-
 export default function NodeMap({ nodes }) {
   if (!nodes.length) {
     return <div>Loading...</div>;
   }
 
   const markers = nodes.map(node => (
-    <Marker position={node.position} key={node.name}>
+    <Marker position={[node.latitude, node.longitude]} key={node.nodeId}>
       <Popup>
         <div>
           <h1> {node.name}</h1>
           <div><span className="title">Datum:</span>{getFormattedDate(node.timestamp)}</div>
           <div><span className="title">Batterieladung:</span>{node.batteryChargeEstimate}</div>
-          </div>
+          <div><a href={`/details/${node.nodeId}`}>Details</a></div>
+        </div>
       </Popup>
     </Marker>
   ));
 
   return (
-    <Map center={nodes[0].position} zoom={13}>
+    <Map center={[nodes[0].latitude, nodes[0].longitude]} zoom={13}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
