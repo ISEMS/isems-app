@@ -1,0 +1,37 @@
+$red: #FF4136
+$borderColor: lightgray
+
+.nodeList
+  padding: 0
+  li
+    list-style-type: none
+
+.node
+  width: 100%
+  border-bottom: 1px solid $borderColor
+  display: grid
+  grid-template-columns: auto 1fr
+  grid-template-rows: 1fr 1fr
+  font-family: sans-serif
+  border-left: 3px solid white
+
+  &.error
+    border-left-color: $red
+
+  &:first-child
+    border-top: 1px solid $borderColor
+
+
+  .icon
+    grid-row: 1 /span 2
+    font-size: 2em
+    display: flex
+    align-items: center
+    padding: 5px
+
+  .status
+    grid-column: 2
+    color: gray
+
+  .status, .name
+    padding: 5px
