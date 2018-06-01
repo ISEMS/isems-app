@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import BatteryAlert from "@material-ui/icons/es/BatteryAlert";
 import WatchLater from "@material-ui/icons/es/WatchLater";
 import Check from "@material-ui/icons/es/Check";
@@ -49,26 +49,24 @@ function Node({ data, type, message }) {
 
 const errorsFirst = a => (a.type === "ok" ? 1 : -1);
 
-export default class NodeList extends Component {
-  render() {
-    const nodes = this.props.nodes
-      .map(getStatus)
-      .sort(errorsFirst)
-      .map(n => (
-        <Node
-          key={n.data.nodeId}
-          data={n.data}
-          type={n.type}
-          message={n.message}
-        />
-      ));
+export default function NodeList(props) {
+  const nodes = props.nodes
+    .map(getStatus)
+    .sort(errorsFirst)
+    .map(n => (
+      <Node
+        key={n.data.nodeId}
+        data={n.data}
+        type={n.type}
+        message={n.message}
+      />
+    ));
 
-    return (
-      <div>
-        <h1>Node Health</h1>
+  return (
+    <div>
+      <h1>Node Health</h1>
 
-        <ul className="nodeList">{nodes}</ul>
-      </div>
-    );
-  }
+      <ul className="nodeList">{nodes}</ul>
+    </div>
+  );
 }
