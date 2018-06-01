@@ -2,7 +2,8 @@ import React from "react";
 
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
-import {getFormattedDate} from "./utils";
+import { getFormattedDate } from "./utils";
+import {Link} from "react-router-dom";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -12,24 +13,33 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png")
 });
 
-
 export default function NodeMap({ nodes }) {
   if (!nodes.length) {
     return <div>Loading...</div>;
   }
 
-  const markers = nodes.map(node => (
-    <Marker position={[node.latitude, node.longitude]} key={node.nodeId}>
-      <Popup>
-        <div>
-          <h1> {node.name}</h1>
-          <div><span className="title">Datum:</span>{getFormattedDate(node.timestamp)}</div>
-          <div><span className="title">Batterieladung:</span>{node.batteryChargeEstimate}</div>
-          <div><a href={`/details/${node.nodeId}`}>Details</a></div>
-        </div>
-      </Popup>
-    </Marker>
-  ));
+  const markers = nodes
+    .filter(node => node.latitude && node.longitude)
+    .map(node => (
+      <Marker position={[node.latitude, node.longitude]} key={node.nodeId}>
+        <Popup>
+          <div>
+            <h1> {node.name}</h1>
+            <div>
+              <span className="title">Datum:</span>
+              {getFormattedDate(node.timestamp)}
+            </div>
+            <div>
+              <span className="title">Batterieladung:</span>
+              {node.batteryChargeEstimate}
+            </div>
+            <div>
+              <Link to={`/details/${node.nodeId}`}>Details</Link>
+            </div>
+          </div>
+        </Popup>
+      </Marker>
+    ));
 
   return (
     <Map center={[nodes[0].latitude, nodes[0].longitude]} zoom={13}>
