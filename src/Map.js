@@ -5,6 +5,8 @@ import L from "leaflet";
 import { getFormattedDate } from "./utils";
 import {Link} from "react-router-dom";
 
+import "leaflet/dist/leaflet.css";
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({

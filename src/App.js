@@ -1,28 +1,14 @@
 import React, {Component} from "react";
-import "./App.css";
-import {parseData} from "./parser";
-import "leaflet/dist/leaflet.css";
+import {Redirect, Route, Switch} from "react-router-dom";
 
 import Notifications from "./Notifications";
-import {Redirect, Route, Switch} from "react-router-dom";
 import NodeDetails from "./NodeDetails";
 import NodeList from "./NodeList";
 import NodeMap from "./Map";
 import FooterNavigation from "./FooterNavigation";
+import {fakefetchData, fetchData} from "./api";
+import "./App.css";
 
-const fetchData = () => {
-  const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
-  const url = `${baseUrl}/measurements/latest`;
-  return fetch(url)
-    .then(response => response.json())
-    .then(json => json.measurements);
-};
-
-const fakefetchData = () => {
-  const fakeData =
-    "Elektra-Solar1;1;1522935107;5;480;0;22.0;18.0;13.9;95;100;23;11.7;14.1;17;50;52.507454;13.458673\n";
-  return Promise.resolve(parseData(fakeData));
-};
 
 class App extends Component {
   constructor(props) {
