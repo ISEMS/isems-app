@@ -1,18 +1,16 @@
 $red: #FF4136
 $borderColor: lightgray
+$black: #000000
 
 .nodeList
   padding: 0
+  margin: 0
   li
     list-style-type: none
 
 .node
   width: 100%
   border-bottom: 1px solid $borderColor
-  display: grid
-  grid-template-columns: auto 1fr
-  grid-template-rows: 1fr 1fr
-  font-family: sans-serif
   border-left: 3px solid white
 
   &.error
@@ -21,17 +19,24 @@ $borderColor: lightgray
   &:first-child
     border-top: 1px solid $borderColor
 
+  .wrapper
+    display: grid
+    grid-template-columns: auto 1fr
+    grid-template-rows: 1fr 1fr
+    font-family: sans-serif
+    color: $black
+    text-decoration: none
 
-  .icon
-    grid-row: 1 /span 2
-    font-size: 2em
-    display: flex
-    align-items: center
-    padding: 5px
+    .icon
+      grid-row: 1 /span 2
+      font-size: 2em
+      display: flex
+      align-items: center
+      padding: 5px
 
-  .status
-    grid-column: 2
-    color: gray
+    .status
+      grid-column: 2
+      color: gray
 
-  .status, .name
-    padding: 5px
+    .status, .name
+      padding: 5px

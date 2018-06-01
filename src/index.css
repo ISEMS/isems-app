@@ -12,5 +12,5 @@ body {
 }
 
 body, html, #root, .App {
-  min-height: 100vh
+  height: 100%
 }

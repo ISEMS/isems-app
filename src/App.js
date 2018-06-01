@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./App.css";
-import { parseData } from "./parser";
+import {parseData} from "./parser";
 import "leaflet/dist/leaflet.css";
 
 import Notifications from "./Notifications";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import NodeDetails from "./NodeDetails";
 import NodeList from "./NodeList";
 import NodeMap from "./Map";
+import FooterNavigation from "./FooterNavigation";
 
 const fetchData = () => {
   const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
@@ -45,24 +46,22 @@ class App extends Component {
       });
   }
 
-
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">ISEMS Management</h1>
+          <h1>ISEMS Management</h1>
         </header>
-        <BrowserRouter>
-          <Switch>
-            <Route path="/map">
-              <NodeMap nodes={this.state.nodes} />
-            </Route>
-            <Route path="/list">
-              <NodeList nodes={this.state.nodes} />
-            </Route>
-            <Route path="/details/:nodeId" component={NodeDetails} />
-          </Switch>
-        </BrowserRouter>
+        <Switch>
+          <Route path="/map">
+            <NodeMap nodes={this.state.nodes} />
+          </Route>
+          <Route path="/list">
+            <NodeList nodes={this.state.nodes} />
+          </Route>
+          <Route path="/details/:nodeId" component={NodeDetails} />
+        </Switch>
+        <FooterNavigation />
       </div>
     );
   }

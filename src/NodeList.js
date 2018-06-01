@@ -7,6 +7,7 @@ import { get } from "lodash";
 import "./NodeList.css";
 
 import { checkBatteryHealth, checkTime } from "./checks";
+import {Link} from "react-router-dom";
 
 function getStatus(data) {
   const checks = [checkTime, checkBatteryHealth];
@@ -40,9 +41,11 @@ function Node({ data, type, message }) {
 
   return (
     <li className={`node ${statusClass}`}>
-      <span className="icon">{icon}</span>
-      <div className="name"> {data.nodeId} </div>
-      <div className="status">{message}</div>
+      <Link to={`/details/${data.nodeId}`} className="wrapper">
+        <span className="icon">{icon}</span>
+        <div className="name"> {data.nodeId} </div>
+        <div className="status">{message}</div>
+      </Link>
     </li>
   );
 }
@@ -62,11 +65,5 @@ export default function NodeList(props) {
       />
     ));
 
-  return (
-    <div>
-      <h1>Node Health</h1>
-
-      <ul className="nodeList">{nodes}</ul>
-    </div>
-  );
+  return <ul className="nodeList">{nodes}</ul>;
 }

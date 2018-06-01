@@ -3,6 +3,8 @@ import React from "react";
 import { VictoryLine, VictoryChart } from "victory";
 import {getFormattedDate} from "./utils";
 
+import "./NodeDetails.css"
+
 const fetchDetails = nodeId => {
   const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const url = `${backendUrl}/measurements/${nodeId}/latest`;

@@ -1,0 +1,26 @@
+$black: #000000
+$lightgray: #e9e9e9
+$borderColor: darken($lightgray, 10)
+$blueish: #094c82
+
+.footerNavigation
+  ul
+    padding: 0
+    margin: 0
+    display: flex
+    justify-content: space-around
+    border-top: 1px solid $borderColor
+    background: $lightgray
+
+  li
+    list-style-type: none
+    padding: 5px
+
+
+  a, a:visited
+    color: $blueish
+    text-decoration: none
+
+  a.active
+    font-weight: bold
+
