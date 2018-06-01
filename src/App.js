@@ -4,7 +4,7 @@ import {parseData} from "./parser";
 import "leaflet/dist/leaflet.css";
 
 import Notifications from "./Notifications";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import NodeDetails from "./NodeDetails";
 import NodeList from "./NodeList";
 import NodeMap from "./Map";
@@ -53,6 +53,9 @@ class App extends Component {
           <h1>ISEMS Management</h1>
         </header>
         <Switch>
+          <Route exact path="/">
+            <Redirect to="/list" />
+          </Route>
           <Route path="/map">
             <NodeMap nodes={this.state.nodes} />
           </Route>
