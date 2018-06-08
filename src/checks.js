@@ -1,4 +1,4 @@
-import DateTime from "luxon/src/datetime";
+import { DateTime } from "luxon";
 
 export function checkTime(data) {
   const now = DateTime.local();

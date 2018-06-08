@@ -1,13 +1,11 @@
 import React from "react";
-import BatteryAlert from "@material-ui/icons/es/BatteryAlert";
-import WatchLater from "@material-ui/icons/es/WatchLater";
-import Check from "@material-ui/icons/es/Check";
 import { get } from "lodash";
 
 import "./NodeList.css";
 
 import { checkBatteryHealth, checkTime } from "./checks";
 import {Link} from "react-router-dom";
+import {BatteryAlert, Check, WatchLater} from "@material-ui/icons";
 
 function getStatus(data) {
   const checks = [checkTime, checkBatteryHealth];
