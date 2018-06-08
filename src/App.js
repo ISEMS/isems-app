@@ -2,12 +2,13 @@ import React, {Component} from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
 
 import Notifications from "./Notifications";
-import NodeDetails from "./NodeDetails";
+import NodeCharts from "./NodeCharts";
 import NodeList from "./NodeList";
 import NodeMap from "./Map";
 import FooterNavigation from "./FooterNavigation";
 import {fakefetchData, fetchData} from "./api";
 import "./App.css";
+import NodeDetails from "./NodeDetails";
 
 
 class App extends Component {
@@ -48,7 +49,8 @@ class App extends Component {
           <Route path="/list">
             <NodeList nodes={this.state.nodes} />
           </Route>
-          <Route path="/details/:nodeId" component={NodeDetails} />
+          <Route exact path="/details/:nodeId" component={NodeDetails} />
+          <Route path="/details/:nodeId/charts" component={NodeCharts} />
         </Switch>
         <FooterNavigation />
       </div>

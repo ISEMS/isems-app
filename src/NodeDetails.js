@@ -1,9 +1,9 @@
 import { Component } from "react";
 import React from "react";
-import { VictoryLine, VictoryChart } from "victory";
 import {getFormattedDate} from "./utils";
 
 import "./NodeDetails.css"
+import Link from "react-router-dom/es/Link";
 
 const fetchDetails = nodeId => {
   const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
@@ -13,39 +13,8 @@ const fetchDetails = nodeId => {
     .then(json => json.measurements);
 };
 
-function TimeChart({ data, property }) {
-  const chartData = data.map(measurement => {
-    return {
-      x: new Date(measurement.timestamp),
-      y: measurement[property]
-    };
-  });
 
-  return (
-    <VictoryChart scale={{ x: "time" }} >
-      <VictoryLine data={chartData} />
-    </VictoryChart>
-  );
-}
-
-function makeCharts(measurements) {
-  const properties = [
-    "batteryVoltage",
-    "batteryTemperature",
-    "temperatureCorrectedVoltage",
-    "openCircuitVoltage"
-  ];
-  return properties.map(p => {
-    return (
-      <div className="chartGroup" key={p}>
-        <h2>{p}</h2>
-        <TimeChart data={measurements} property={p} />
-      </div>
-    );
-  });
-}
-
-export default class NodeDetails extends Component {
+export default class NodeCharts extends Component {
   constructor(props) {
     super(props);
 
@@ -61,21 +30,16 @@ export default class NodeDetails extends Component {
   }
 
   render() {
-    const charts = this.state.measurements
-      ? makeCharts(this.state.measurements)
-      : null;
-
     const latestMeasurement = this.state.measurements && getFormattedDate(this.state.measurements[0].timestamp);
 
     return (
       <div>
-        <h1> 24 hour statistics for {this.props.match.params.nodeId} </h1>
+        <h1> Node overview for {this.props.match.params.nodeId} </h1>
 
+        Here we will list some useful information.
         <aside>Latest measurement: {latestMeasurement}</aside>
+        <Link to={`/details/${this.props.match.params.nodeId}/charts`}>Show charts</Link>
 
-        <div className="charts">
-          {charts}
-        </div>
       </div>
     );
   }
