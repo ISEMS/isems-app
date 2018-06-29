@@ -183,3 +183,5 @@ export function checkAll(data) {
   messages.push(checkTime(data));
   return messages;
 }
+
+export {hexStatusToBitArray}
