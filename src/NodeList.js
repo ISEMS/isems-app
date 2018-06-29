@@ -1,44 +1,40 @@
 import React from "react";
-import { get } from "lodash";
+import { get, find } from "lodash";
 
 import "./NodeList.css";
 
-import { checkBatteryHealth, checkTime } from "./checks";
+import {checkAll} from "./checks";
 import {Link} from "react-router-dom";
 import {BatteryAlert, Check, WatchLater} from "@material-ui/icons";
 
 function getStatus(data) {
-  const checks = [checkTime, checkBatteryHealth];
-  let warningStatus;
-  for (let check of checks) {
-    warningStatus = check(data);
-    if (warningStatus) {
-      break;
-    }
-  }
+  const messages = checkAll(data);
+  const firstError = find(messages, message => message.type === "error");
+  const firstWarning = find(messages, message => message.type === "warning");
   const okStatus = {
-    type: "ok",
+    type: "info",
+    name: "ok",
     message: "Everything is fine!"
   };
-  const status = warningStatus || okStatus;
-  return { ...status, data };
+  const status = firstError || firstWarning || okStatus;
+  return { status, data };
 }
 
-function getIcon(type) {
+function getIcon(name) {
   const mapping = {
     timeOffset: <WatchLater />,
     batteryHealth: <BatteryAlert />
   };
   const defaultIcon = <Check />;
-  return get(mapping, type, defaultIcon);
+  return get(mapping, name, defaultIcon);
 }
 
-function Node({ data, type, message }) {
-  const icon = getIcon(type);
-  const statusClass = type === "ok" ? "" : "error";
+function Node({ data, status}) {
+  const {name, type, message} = status;
+  const icon = getIcon(name);
 
   return (
-    <li className={`node ${statusClass}`}>
+    <li className={`node ${type}`}>
       <Link to={`/details/${data.nodeId}`} className="wrapper">
         <span className="icon">{icon}</span>
         <div className="name"> {data.nodeId} </div>
@@ -48,7 +44,12 @@ function Node({ data, type, message }) {
   );
 }
 
-const errorsFirst = a => (a.type === "ok" ? 1 : -1);
+const errorsFirst = (firstNode, secondNode) => {
+  const sortOrder = ["error", "warning", "info"];
+  const firstStatus = sortOrder.indexOf(firstNode.status.type);
+  const secondStatus = sortOrder.indexOf(secondNode.status.type);
+  return firstStatus - secondStatus;
+};
 
 export default function NodeList(props) {
   const nodes = props.nodes
@@ -58,8 +59,7 @@ export default function NodeList(props) {
       <Node
         key={n.data.nodeId}
         data={n.data}
-        type={n.type}
-        message={n.message}
+        status={n.status}
       />
     ));
 

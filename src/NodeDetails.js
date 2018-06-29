@@ -1,9 +1,12 @@
 import { Component } from "react";
 import React from "react";
 import {getFormattedDate} from "./utils";
+import {Check, Warning, Error} from "@material-ui/icons"
+import {groupBy} from "lodash"
 
 import "./NodeDetails.css"
 import Link from "react-router-dom/es/Link";
+import {checkAll} from "./checks";
 
 const fetchDetails = nodeId => {
   const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
@@ -12,6 +15,20 @@ const fetchDetails = nodeId => {
     .then(response => response.json())
     .then(json => json.measurements);
 };
+
+function getIcon(type){
+  const mapping = {
+    "error": <Error />,
+    "warning": <Warning />,
+    "info": <Check/>
+  };
+  return mapping[type];
+}
+
+function Message({status}){
+  const icon = getIcon(status.type);
+  return <li> {icon} {status.message} </li>
+}
 
 
 export default class NodeCharts extends Component {
@@ -31,13 +48,25 @@ export default class NodeCharts extends Component {
 
   render() {
     const latestMeasurement = this.state.measurements && getFormattedDate(this.state.measurements[0].timestamp);
+    const messages = this.state.measurements && checkAll(this.state.measurements[0]);
+    const types = {info: [], warning: [], error: []};
+
+    const groups = groupBy(messages, "type");
+    const displayMessages = {...types, ...groups};
 
     return (
-      <div>
-        <h1> Node overview for {this.props.match.params.nodeId} </h1>
+      <div className="node-details">
+        <h1> {this.props.match.params.nodeId} </h1>
 
-        Here we will list some useful information.
-        <aside>Latest measurement: {latestMeasurement}</aside>
+        <ul className="status errors">
+          {displayMessages.error.map(status => <Message key={status.name} status={status} />)}
+        </ul>
+        <ul className="status warnings">
+          {displayMessages.warning.map(status => <Message key={status.name} status={status} />)}
+        </ul>
+        <ul className="status infos">
+          {displayMessages.info.map(status => <Message key={status.name} status={status} />)}
+        </ul>
         <Link to={`/details/${this.props.match.params.nodeId}/charts`}>Show charts</Link>
 
       </div>

@@ -1,11 +1,27 @@
-.charts
-  display: flex
-  flex-wrap: wrap
-  justify-content: space-evenly
+@import "colors.sass"
 
+.node-details
+  padding: 1em
+  background-color: #f5f5f5
 
-.chartGroup
-  border: 1px solid lightgray
-  margin-top: 2em
-  display: grid
+  .status
+    padding: 0
+    margin-top: 2em
+    li
+      list-style-type: none
+      display: flex
+      align-items: center
+      margin-top: .5em
+
+      svg
+        margin-right: .5em
+
+    &.infos svg
+      fill: $green
+
+    &.warnings svg
+      fill: $orange
+
+    &.errors svg
+      fill: $red
 
