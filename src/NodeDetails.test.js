@@ -28,3 +28,15 @@ describe("NodeDetails", () => {
     expect(wrapper.find(".infos").find(Message).length).toBe(0);
   });
 });
+
+import { Error, Warning } from "@material-ui/icons";
+
+describe("Message", () => {
+  it("should render", async () => {
+    const status = {type: "error", message: "something is really wrong"};
+    const wrapper = shallow(<Message status={status} />)
+    expect(wrapper.contains(<Error />)).toBe(true);
+    expect(wrapper.contains(<Warning />)).toBe(false);
+    expect(wrapper.find("span").text()).toBe("something is really wrong");
+  });
+});

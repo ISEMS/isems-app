@@ -19,7 +19,7 @@ function getIcon(type){
 
 export function Message({status}){
   const icon = getIcon(status.type);
-  return <li> {icon} {status.message} </li>
+  return <li> {icon} <span>{status.message}</span> </li>
 }
 
 
