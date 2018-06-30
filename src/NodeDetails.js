@@ -1,20 +1,12 @@
 import { Component } from "react";
 import React from "react";
-import {getFormattedDate} from "./utils";
 import {Check, Warning, Error} from "@material-ui/icons"
 import {groupBy} from "lodash"
 
 import "./NodeDetails.css"
-import Link from "react-router-dom/es/Link";
+import {Link} from "react-router-dom";
 import {checkAll} from "./checks";
-
-const fetchDetails = nodeId => {
-  const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
-  const url = `${backendUrl}/measurements/${nodeId}/latest`;
-  return fetch(url)
-    .then(response => response.json())
-    .then(json => json.measurements);
-};
+import {fetchDetails} from "./api";
 
 function getIcon(type){
   const mapping = {
@@ -25,13 +17,13 @@ function getIcon(type){
   return mapping[type];
 }
 
-function Message({status}){
+export function Message({status}){
   const icon = getIcon(status.type);
   return <li> {icon} {status.message} </li>
 }
 
 
-export default class NodeCharts extends Component {
+export default class NodeDetails extends Component {
   constructor(props) {
     super(props);
 
@@ -41,13 +33,12 @@ export default class NodeCharts extends Component {
   }
 
   componentDidMount() {
-    fetchDetails(this.props.match.params.nodeId).then(measurements =>
+    return fetchDetails(this.props.match.params.nodeId).then(measurements =>
       this.setState({ measurements })
     );
   }
 
   render() {
-    const latestMeasurement = this.state.measurements && getFormattedDate(this.state.measurements[0].timestamp);
     const messages = this.state.measurements && checkAll(this.state.measurements[0]);
     const types = {info: [], warning: [], error: []};
 
