@@ -1,5 +1,6 @@
-import { DateTime } from "luxon";
-import { unionBy, filter, flatMap, partialRight, ary } from "lodash";
+import {DateTime} from "luxon";
+import {ary, filter, flatMap, partialRight, unionBy} from "lodash";
+import {prettyTimeDifference} from "./utils";
 
 const parseDecimal = ary(partialRight(parseInt, 10), 1);
 
@@ -35,19 +36,6 @@ export function checkServerStatus(data) {
   return filter(statusBits, (status, index) => bitList[index] === 1);
 }
 
-function prettyTimeDifference(time, reference) {
-  const differenceDays = reference.diff(time, "days").toObject().days;
-  if (differenceDays >= 1) {
-    return { unit: "days", count: differenceDays.toFixed(0) };
-  }
-  const differenceHours = reference.diff(time, "hours").toObject().hours;
-  if (differenceHours >= 24) {
-    return { unit: "hours", count: differenceHours.toFixed(0) };
-  }
-  const differenceMinutes = reference.diff(time, "minutes").toObject().minutes;
-  return { unit: "minutes", count: differenceMinutes.toFixed(0) };
-}
-
 export function checkTime(data) {
   const now = DateTime.local();
   const measurementTime = DateTime.fromRFC2822(data.timestamp);
@@ -61,7 +49,7 @@ export function checkTime(data) {
       )} days.`
     };
   }
-  const timeSince = prettyTimeDifference(measurementTime, now);
+  const timeSince = prettyTimeDifference(now, measurementTime);
   return {
     name: "timeOffset",
     type: "info",
