@@ -143,7 +143,7 @@ describe("checks", () => {
       expect(info.name).toBe("timeOffset");
     });
 
-    fit("returns info if last communication within 24 houts", () => {
+    it("returns info if last communication within 24 hours", () => {
       const info = checkTime({ timestamp: "Mon, 08 Jan 2018 10:51:28 GMT" });
       expect(info.type).toBe("info");
       expect(info.name).toBe("timeOffset");
