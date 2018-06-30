@@ -1,4 +1,4 @@
-import { checkServerStatus, hex, hexStatusToBitArray } from "./checks";
+import { checkServerStatus, hexStatusToBitArray } from "./checks";
 
 describe("checks", () => {
   describe("hexStatusToBitArray", () => {
