@@ -1,6 +1,6 @@
 import {DateTime} from "luxon";
-import {ary, filter, flatMap, partialRight, unionBy} from "lodash";
-import {prettyTimeDifference} from "./utils";
+import {ary, filter, flatMap, partialRight} from "lodash";
+import {prettyTimeDifference} from "../utils";
 
 const parseDecimal = ary(partialRight(parseInt, 10), 1);
 
@@ -59,7 +59,7 @@ export function checkTime(data) {
   };
 }
 
-function checkBatteryHealth(data, statuses) {
+export function checkBatteryHealth(data, statuses) {
   if (statuses.includes("battery_level_low")) {
     return {
       type: "warning",
@@ -69,7 +69,7 @@ function checkBatteryHealth(data, statuses) {
   }
 }
 
-function checkCharge(data, statuses) {
+export function checkCharge(data, statuses) {
   const params = {
     name: "charge",
     type: "info"
@@ -97,7 +97,7 @@ function checkCharge(data, statuses) {
   }
 }
 
-function checkCapacity(data, statuses) {
+export function checkCapacity(data, statuses) {
   if (statuses.includes("energy_capacity_too_small")) {
     return {
       type: "error",
@@ -107,7 +107,7 @@ function checkCapacity(data, statuses) {
   }
 }
 
-function checkTemperature(data, statuses) {
+export function checkTemperature(data, statuses) {
   if (statuses.includes("temp_sensor_not_connected")) {
     return {
       type: "warning",
@@ -140,7 +140,7 @@ function checkTemperature(data, statuses) {
   };
 }
 
-function checkSolarControllerCommunication(data, statuses) {
+export function checkSolarControllerCommunication(data, statuses) {
   if (statuses.includes("no_solar_communication")) {
     return {
       type: "error",
@@ -155,21 +155,12 @@ function checkSolarControllerCommunication(data, statuses) {
   };
 }
 
-export function checkAll(data) {
-  const statusChecks = [
-    checkBatteryHealth,
-    checkCharge,
-    checkCapacity,
-    checkTemperature,
-    checkSolarControllerCommunication
-  ];
-  const statuses = checkServerStatus(data);
-
-  const messages = statusChecks
-    .map(check => check(data, statuses))
-    .filter(message => message !== undefined);
-  messages.push(checkTime(data));
-  return messages;
-}
 
 export {hexStatusToBitArray}
+export default {
+  checkBatteryHealth,
+  checkCharge,
+  checkCapacity,
+  checkTemperature,
+  checkSolarControllerCommunication
+}
