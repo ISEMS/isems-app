@@ -12,7 +12,7 @@ jest.mock("./api");
 jest.mock("./checks");
 
 describe("NodeDetails", () => {
-  it("should render if properties are visible", async () => {
+  it("should convert server response to list of statuses", async () => {
     const fakeData = [{ status: "0x941" }];
     fetchDetails.mockReturnValue(Promise.resolve(fakeData));
     checkAll.mockReturnValue([{type: "error", name:"test-status"}]);
