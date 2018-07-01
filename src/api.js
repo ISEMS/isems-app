@@ -1,6 +1,5 @@
-import {parseData} from "./parser";
-
 const fetchData = () => {
+  return Promise.reject()
   const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const url = `${baseUrl}/measurements/latest`;
   return fetch(url)
@@ -9,9 +8,27 @@ const fetchData = () => {
 };
 
 const fakefetchData = () => {
-  const fakeData =
-  "Elektra-Solar1;1;1522935107;5;480;0;22.0;18.0;13.9;95;100;23;11.7;14.1;17;50;52.507454;13.458673\n";
-  return Promise.resolve(parseData(fakeData));
+  return Promise.resolve([{
+    batteryChargeEstimate : 95,
+    batteryHealthEstimate : 100,
+    batteryTemperature : 23,
+    batteryVoltage : 13.9,
+    isPowerSaveMode : false,
+    isemsRevision : 1,
+    latitude : 52.507454,
+    longitude : 13.458673,
+    lowVoltageDisconnectVoltage : 11.7,
+    mppVoltage : 18.0,
+    nodeId : "Example Node",
+    openCircuitVoltage : 22.0,
+    openMPPTFirmwareVersion : 5,
+    rateBatteryCapacity : 17,
+    ratedSolarModuleCapacity : 50,
+    temperatureCorrectedVoltage : 14.1,
+    timeToShutdown : 480,
+    timestamp : "Sun, 01 Jul 2018 08:23:27 GMT",
+    status: "0x500",
+  }])
 };
 
 const fetchDetails = nodeId => {
