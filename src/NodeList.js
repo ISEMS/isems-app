@@ -7,7 +7,7 @@ import {checkAll} from "./checks";
 import {Link} from "react-router-dom";
 import {BatteryAlert, Check, WatchLater} from "@material-ui/icons";
 
-function getStatus(data) {
+export function getStatus(data) {
   const messages = checkAll(data);
   const firstError = find(messages, message => message.type === "error");
   const firstWarning = find(messages, message => message.type === "warning");
@@ -29,7 +29,7 @@ function getIcon(name) {
   return get(mapping, name, defaultIcon);
 }
 
-function Node({ data, status}) {
+export function Node({ data, status}) {
   const {name, type, message} = status;
   const icon = getIcon(name);
 
