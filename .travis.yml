@@ -1,13 +1,21 @@
 language: node_js
 node_js:
-  - 6
+- 6
 cache:
   directories:
     - node_modules
+install:
+  - npm install
+  - npm install -g codecov
+  - yarn global add greenkeeper-lockfile@1
 before_script:
+  - greenkeeper-lockfile-update
   - npm run build-css
 script:
   - npm test -- --coverage
 after_script:
-  - npm install -g codecov
   - codecov
+  - greenkeeper-lockfile-upload
+env:
+  global:
+    secure: FCOWH/OsQSdzYvAjCj5AGz9vtZJvTmq1u36Vyxd6S+SvQNtc+I9vaWfRif24oLh3pPuZVElEhPw6I7NpRFKL3xo86aG7HQCB4+38M1SgpA/2NpNFv1SbRfoII+jeG867jOlYVHcyEoWo+zP+ImJdE+6BdPUVfdqi4hb8BggxiNvWDsK5fWT8WPA3uXDZwMat6OvH6qSp54YP1q2Hq9E7H7hGuchMkuHsnuUj/GWheVwYvUPrA7mHkhWLb8qcBDdMRZf6icDjMFilwxncd3XKGf1XyslEroJV2Njhn/gVouxJpGwrm231rOQ3AcmlZ8BgU8t0mHuiFSizzC4df1EPMqlkcfud80v197U6sNTG0ZMBFZIM2pkfjlx0Xo5WHctb95KcXVdD1NhDrcoV49UDxbkkb+JvhrEUmVajwhsFwNOh0pYiZnQxZuAp9OceF4GHd/gKQ6Enp6vsGof5an2cuYBLFFZYl6C9yPX1GFkZepWgJTgbr3YFuw7cLst51e2YkCcaox3MwluRHV/3HYLbodyfH7NXpkHHvr0rC2hsUtW3Wbho7r4f6VVy/qdJCuj4VCuibMPpBWnFu9kpCmqLuhON6crHZNUcLYtWht5x/3Jwt6HQ/cr4zk6nugjZhPaIAX/MM4ceQYpNYMkbFV0PCXl3LC4HsuUPQUkyjMkfQCc=
