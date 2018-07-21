@@ -14,9 +14,9 @@ yarn install
 ```
 
 ## Running
-You should define the `REACT_APP_BACKEND_URL` environment variable to tell the app where the server is. 
+You should define the `REACT_APP_API_URL` environment variable to tell the app where the server is. 
 ```bash
-env REACT_APP_BACKEND_URL=http://localhost:8000 yarn start
+env REACT_APP_API_URL=http://localhost:8000 yarn start
 ```
 
 
