@@ -23,7 +23,8 @@ export function getStatus(data) {
 function getIcon(name) {
   const mapping = {
     timeOffset: <WatchLater />,
-    batteryHealth: <BatteryAlert />
+    batteryHealth: <BatteryAlert />,
+    batteryCapacity: <BatteryAlert />,
   };
   const defaultIcon = <Check />;
   return get(mapping, name, defaultIcon);
