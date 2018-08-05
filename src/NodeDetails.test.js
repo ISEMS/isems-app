@@ -7,6 +7,7 @@ import NodeDetails, {
   MessageGroups,
   MessageList
 } from "./NodeDetails";
+import Loader from "./Loader";
 import { fetchDetails } from "./api";
 import { checkAll } from "./checks";
 
@@ -25,10 +26,12 @@ describe("NodeDetails", () => {
       <NodeDetails match={{ params: { nodeId: "My Node" } }} />
     );
 
-    expect(wrapper.find(MessageGroups).length).toBe(1);
+    expect(wrapper.find(Loader).length).toBe(1);
+    expect(wrapper.find(MessageGroups).length).toBe(0);
 
     await wrapper.instance().componentDidMount();
     wrapper.update();
+
     const expectedProps = {
       displayMessages: {
         info: [],
@@ -36,6 +39,8 @@ describe("NodeDetails", () => {
         error: [{ type: "error", name: "test-status" }]
       }
     };
+    expect(wrapper.find(Loader).length).toBe(0);
+    expect(wrapper.find(MessageGroups).length).toBe(1);
     expect(wrapper.find(MessageGroups).props()).toEqual(expectedProps);
   });
 });

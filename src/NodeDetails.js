@@ -7,6 +7,7 @@ import "./NodeDetails.css";
 import { Link } from "react-router-dom";
 import { checkAll } from "./checks";
 import { fetchDetails } from "./api";
+import Loader from "./Loader";
 
 function getIcon(type) {
   const mapping = {
@@ -71,7 +72,13 @@ export default class NodeDetails extends Component {
       <div className="node-details">
         <h1> {this.props.match.params.nodeId} </h1>
 
-        <MessageGroups displayMessages={displayMessages} />
+        {this.state.measurements ? (
+          <MessageGroups displayMessages={displayMessages} />
+        ) : (
+          <Loader>
+            <div style={{ textAlign: "center" }}>Loading...</div>
+          </Loader>
+        )}
 
         <Link to={`/details/${this.props.match.params.nodeId}/charts`}>
           Show charts
