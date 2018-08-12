@@ -68,7 +68,7 @@ export default class NodeCharts extends Component {
     const latestMeasurement = this.state.measurements && getFormattedDate(this.state.measurements[0].timestamp);
 
     return (
-      <div>
+      <div className="node-charts">
         <h1> 24 hour statistics for {this.props.match.params.nodeId} </h1>
 
         <aside>Latest measurement: {latestMeasurement}</aside>
