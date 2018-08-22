@@ -21,6 +21,15 @@ describe("checks", () => {
 
       expect(hexStatusToBitArray("0x941")).toEqual(expected);
     });
+
+    it("returns expected array for 2 digit numbers", () => {
+      // prettier-ignore
+      const expected = [ 0, 0, 0, 0,   // 0
+                         1, 1, 1, 0,   // 7
+                         0, 1, 0, 0 ]; // 2
+
+      expect(hexStatusToBitArray("0x072")).toEqual(expected);
+    });
   });
 
   describe("checkServerStatus", () => {

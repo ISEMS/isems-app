@@ -1,8 +1,9 @@
 import {DateTime} from "luxon";
 import {ary, filter, flatMap, partialRight} from "lodash";
-import {prettyTimeDifference} from "../utils";
+import { prettyTimeDifference, reverseString } from "../utils";
 
 const parseDecimal = ary(partialRight(parseInt, 10), 1);
+const stringToArray = ary(Array.from, 1);
 
 const hexStatusToBitArray = statusCode => {
   // coverts hex value (e.g. 0x941) to list of bits
@@ -10,11 +11,15 @@ const hexStatusToBitArray = statusCode => {
   // bit-value: 1 2 4 8   1 2 4 8   1 2 4 8
   // binary:    1 0 0 1   0 0 1 0   1 0 0 0
   // [ 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0 ]
-  const parts = parseInt(statusCode, 16)
-    .toString(2)
-    .match(/.{1,4}/g);
-  const toBigEndianArray = x => x.split("").reverse();
-  return flatMap(parts, toBigEndianArray).map(parseDecimal);
+  const pattern = /0x([0-9a-f])([0-9a-f])([0-9a-f])/;
+  // eslint-disable-next-line
+  const [_match, ...parts] = statusCode.match(pattern);
+  const binaryParts = parts.map(digit => {
+    const littleEndian = parseInt(digit, 16).toString(2);
+    const bigEndian = reverseString(littleEndian);
+    return bigEndian.padEnd(4, "0");
+  });
+  return flatMap(binaryParts, stringToArray).map(parseDecimal);
 };
 
 export function checkServerStatus(data) {
