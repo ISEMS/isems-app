@@ -1,5 +1,5 @@
-import {DateTime} from "luxon";
-import {ary, filter, flatMap, partialRight} from "lodash";
+import { DateTime } from "luxon";
+import { ary, filter, flatMap, partialRight } from "lodash";
 import { prettyTimeDifference, reverseString } from "../utils";
 
 const parseDecimal = ary(partialRight(parseInt, 10), 1);
@@ -160,12 +160,11 @@ export function checkSolarControllerCommunication(data, statuses) {
   };
 }
 
-
-export {hexStatusToBitArray}
+export { hexStatusToBitArray };
 export default {
   checkBatteryHealth,
   checkCharge,
   checkCapacity,
   checkTemperature,
   checkSolarControllerCommunication
-}
+};
