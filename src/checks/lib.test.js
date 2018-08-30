@@ -147,13 +147,13 @@ describe("checks", () => {
     Settings.now = () => new Date(2018, 0, 8).valueOf();
 
     it("return warning long time since last transmission", () => {
-      const info = checkTime({ timestamp: "Mon, 01 Jan 2018 10:51:28 GMT" });
+      const info = checkTime({ timestamp: "2018-01-01T11:51:28" });
       expect(info.type).toBe("error");
       expect(info.name).toBe("timeOffset");
     });
 
     it("returns info if last communication within 24 hours", () => {
-      const info = checkTime({ timestamp: "Mon, 08 Jan 2018 10:51:28 GMT" });
+      const info = checkTime({ timestamp: "2018-01-08T11:51:28" });
       expect(info.type).toBe("info");
       expect(info.name).toBe("timeOffset");
     });

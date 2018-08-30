@@ -43,7 +43,7 @@ export function checkServerStatus(data) {
 
 export function checkTime(data) {
   const now = DateTime.local();
-  const measurementTime = DateTime.fromRFC2822(data.timestamp);
+  const measurementTime = DateTime.fromISO(data.timestamp);
   const differenceDays = now.diff(measurementTime, "days").toObject().days;
   if (differenceDays > 1) {
     return {
