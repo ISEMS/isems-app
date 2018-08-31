@@ -132,7 +132,7 @@ describe("checks", () => {
       const info = checkSolarControllerCommunication({}, [
         "no_solar_communication"
       ]);
-      expect(info.type).toBe("error");
+      expect(info.type).toBe("critical");
       expect(info.name).toBe("solar_controller_communication");
     });
 
@@ -148,7 +148,7 @@ describe("checks", () => {
 
     it("return warning long time since last transmission", () => {
       const info = checkTime({ timestamp: "2018-01-01T11:51:28" });
-      expect(info.type).toBe("error");
+      expect(info.type).toBe("critical");
       expect(info.name).toBe("timeOffset");
     });
 

@@ -5,10 +5,11 @@ import "./NodeList.css";
 
 import {checkAll} from "./checks";
 import {Link} from "react-router-dom";
-import {BatteryAlert, Check, WatchLater} from "@material-ui/icons";
+import {BatteryAlert, Check, WatchLater, Error} from "@material-ui/icons";
 
 export function getStatus(data) {
   const messages = checkAll(data);
+  const firstCritical = find(messages, message => message.type === "critical");
   const firstError = find(messages, message => message.type === "error");
   const firstWarning = find(messages, message => message.type === "warning");
   const okStatus = {
@@ -16,13 +17,14 @@ export function getStatus(data) {
     name: "ok",
     message: "Everything is fine!"
   };
-  const status = firstError || firstWarning || okStatus;
+  const status = firstCritical || firstError || firstWarning || okStatus;
   return { status, data };
 }
 
 function getIcon(name) {
   const mapping = {
     timeOffset: <WatchLater />,
+    solar_controller_communication: <Error />,
     batteryHealth: <BatteryAlert />,
     batteryCapacity: <BatteryAlert />,
   };
@@ -46,7 +48,7 @@ export function Node({ data, status}) {
 }
 
 const errorsFirst = (firstNode, secondNode) => {
-  const sortOrder = ["error", "warning", "info"];
+  const sortOrder = ["critical", "error", "warning", "info"];
   const firstStatus = sortOrder.indexOf(firstNode.status.type);
   const secondStatus = sortOrder.indexOf(secondNode.status.type);
   return firstStatus - secondStatus;

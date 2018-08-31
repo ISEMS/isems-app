@@ -36,6 +36,7 @@ describe("NodeDetails", () => {
       displayMessages: {
         info: [],
         warning: [],
+        critical: [],
         error: [{ type: "error", name: "test-status" }]
       }
     };
@@ -46,14 +47,14 @@ describe("NodeDetails", () => {
 });
 
 describe("MessageGroups", () => {
-  it("should render three MessageLists", async () => {
-    const displayMessages = { info: [], warning: [], error: [] };
+  it("should render four MessageLists", async () => {
+    const displayMessages = { info: [], warning: [], error: [], critical: [] };
 
     const wrapper = shallow(
       <MessageGroups displayMessages={displayMessages} />
     );
 
-    expect(wrapper.find(MessageList).length).toBe(3);
+    expect(wrapper.find(MessageList).length).toBe(4);
   });
 });
 
@@ -62,7 +63,7 @@ describe("MessageList", () => {
     const messages = [{ type: "error", name: "test-status" }];
 
     const wrapper = shallow(<MessageList messages={messages} type="error" />);
-    expect(wrapper.find(".status.error").length).toBe(1);
+    expect(wrapper.find(".status").length).toBe(1);
     expect(wrapper.find(Message).length).toBe(1);
   });
 });
@@ -73,8 +74,9 @@ describe("Message", () => {
   it("should render", async () => {
     const status = { type: "error", message: "something is really wrong" };
     const wrapper = shallow(<Message status={status} />);
-    expect(wrapper.contains(<Error />)).toBe(true);
+    expect(wrapper.contains(<Error style={{ fill: "#FF4136" }}/>)).toBe(true);
     expect(wrapper.contains(<Warning />)).toBe(false);
     expect(wrapper.find("span").text()).toBe("something is really wrong");
   });
 });
+

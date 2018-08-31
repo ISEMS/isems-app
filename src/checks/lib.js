@@ -31,7 +31,7 @@ export function checkServerStatus(data) {
     "battery_level_low", // WARNING
     "energy_capacity_too_small", // ERROR
     "temp_sensor_not_connected", // WARNING
-    "no_solar_communication", // ERROR
+    "no_solar_communication", // CRITICAL
     "batter_overheating", // ERROR
     "low_battery_temperature", // WARNING
     null, // TBS
@@ -48,7 +48,7 @@ export function checkTime(data) {
   if (differenceDays > 1) {
     return {
       name: "timeOffset",
-      type: "error",
+      type: "critical",
       message: `The module did not send data since ${differenceDays.toFixed(
         0
       )} days.`
@@ -148,7 +148,7 @@ export function checkTemperature(data, statuses) {
 export function checkSolarControllerCommunication(data, statuses) {
   if (statuses.includes("no_solar_communication")) {
     return {
-      type: "error",
+      type: "critical",
       name: "solar_controller_communication",
       message: `Cannot communicate with solar controller. Make sure the devices are properly connected.`
     };

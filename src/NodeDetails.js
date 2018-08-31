@@ -1,7 +1,7 @@
 import { Component } from "react";
 import React from "react";
 import { Check, Warning, Error } from "@material-ui/icons";
-import { groupBy } from "lodash";
+import { groupBy, remove } from "lodash";
 
 import "./NodeDetails.css";
 import { Link } from "react-router-dom";
@@ -11,9 +11,10 @@ import Loader from "./Loader";
 
 function getIcon(type) {
   const mapping = {
-    error: <Error />,
-    warning: <Warning />,
-    info: <Check />
+    critical: <Error style={{ fill: "#FF4136" }} />,
+    error: <Error style={{ fill: "#FF4136" }} />,
+    warning: <Warning style={{ fill: "#ff8115" }} />,
+    info: <Check style={{ fill: "green" }} />
   };
   return mapping[type];
 }
@@ -27,20 +28,42 @@ export function Message({ status }) {
   );
 }
 
-export function MessageList({ messages, type }) {
+export function MessageList({ messages }) {
   return (
-    <ul className={`status ${type}`}>
+    <ul className="status">
       {messages.map(status => <Message key={status.name} status={status} />)}
     </ul>
   );
 }
 
 export function MessageGroups({ displayMessages }) {
+  const timeMessages = remove(
+    displayMessages.info,
+    message => message.name === "timeOffset"
+  );
+
+  if (displayMessages.critical.length) {
+    return (
+      <React.Fragment>
+        {timeMessages && <MessageList messages={timeMessages} />}
+        <MessageList messages={displayMessages.critical} />
+
+        <div className="critical-explanation">
+          This message is considered critical. <br />
+          Due to this we can not reliably show you any other information about
+          this node.
+        </div>
+      </React.Fragment>
+    );
+  }
+
   return (
     <React.Fragment>
-      <MessageList messages={displayMessages.error} type="errors" />
-      <MessageList messages={displayMessages.warning} type="warnings" />
-      <MessageList messages={displayMessages.info} type="infos" />
+      {timeMessages && <MessageList messages={timeMessages} />}
+
+      <MessageList messages={displayMessages.error} />
+      <MessageList messages={displayMessages.warning} />
+      <MessageList messages={displayMessages.info} />
     </React.Fragment>
   );
 }
@@ -63,7 +86,7 @@ export default class NodeDetails extends Component {
   render() {
     const messages =
       this.state.measurements && checkAll(this.state.measurements[0]);
-    const types = { info: [], warning: [], error: [] };
+    const types = { info: [], warning: [], error: [], critical: [] };
 
     const groups = groupBy(messages, "type");
     const displayMessages = { ...types, ...groups };
@@ -73,7 +96,9 @@ export default class NodeDetails extends Component {
         <h1> {this.props.match.params.nodeId} </h1>
 
         {this.state.measurements ? (
-          <MessageGroups displayMessages={displayMessages} />
+          <div>
+            <MessageGroups displayMessages={displayMessages} />
+          </div>
         ) : (
           <Loader>
             <div style={{ textAlign: "center" }}>Loading...</div>
