@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 
 const getFormattedDate = timestamp => {
-  const dt = DateTime.fromRFC2822(timestamp);
+  const dt = DateTime.fromISO(timestamp);
   return dt.toLocaleString(DateTime.DATETIME_SHORT);
 };
 
