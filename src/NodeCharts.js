@@ -1,9 +1,9 @@
 import { Component } from "react";
 import React from "react";
-import { VictoryLine, VictoryChart } from "victory";
-import {getFormattedDate} from "./utils";
+import { VictoryLine, VictoryChart, VictoryZoomContainer } from "victory";
+import { getFormattedDate } from "./utils";
 
-import "./NodeCharts.css"
+import "./NodeCharts.css";
 
 const fetchDetails = nodeId => {
   const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
@@ -22,7 +22,11 @@ function TimeChart({ data, property }) {
   });
 
   return (
-    <VictoryChart scale={{ x: "time" }} >
+    <VictoryChart
+      scale={{ x: "time" }}
+      domainPadding={{ y: 10 }}
+      containerComponent={<VictoryZoomContainer />}
+    >
       <VictoryLine data={chartData} />
     </VictoryChart>
   );
@@ -65,7 +69,9 @@ export default class NodeCharts extends Component {
       ? makeCharts(this.state.measurements)
       : null;
 
-    const latestMeasurement = this.state.measurements && getFormattedDate(this.state.measurements[0].timestamp);
+    const latestMeasurement =
+      this.state.measurements &&
+      getFormattedDate(this.state.measurements[0].timestamp);
 
     return (
       <div className="node-charts">
@@ -73,9 +79,7 @@ export default class NodeCharts extends Component {
 
         <aside>Latest measurement: {latestMeasurement}</aside>
 
-        <div className="charts">
-          {charts}
-        </div>
+        <div className="charts">{charts}</div>
       </div>
     );
   }
