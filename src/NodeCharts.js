@@ -35,8 +35,9 @@ function TimeChart({ data, property }) {
 function makeCharts(measurements) {
   const properties = [
     "batteryVoltage",
+    "batteryChargeEstimate",
+    "mppVoltage",
     "batteryTemperature",
-    "temperatureCorrectedVoltage",
     "openCircuitVoltage"
   ];
   return properties.map(p => {
