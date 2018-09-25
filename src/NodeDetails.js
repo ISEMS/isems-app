@@ -1,6 +1,9 @@
 import { Component } from "react";
 import React from "react";
-import { Check, Warning, Error } from "@material-ui/icons";
+import Check from "@material-ui/icons/Check"
+import Warning from "@material-ui/icons/Warning"
+import Error from "@material-ui/icons/Error"
+
 import { groupBy, remove } from "lodash";
 
 import "./NodeDetails.css";

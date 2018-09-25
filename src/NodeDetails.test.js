@@ -68,7 +68,8 @@ describe("MessageList", () => {
   });
 });
 
-import { Error, Warning } from "@material-ui/icons";
+import Error from "@material-ui/icons/Error"
+import Warning from "@material-ui/icons/Warning"
 
 describe("Message", () => {
   it("should render", async () => {

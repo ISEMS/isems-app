@@ -2,7 +2,8 @@ import React from "react";
 
 import "./FooterNavigation.css"
 import {NavLink} from "react-router-dom";
-import {ViewList, Map} from "@material-ui/icons";
+import ViewList from "@material-ui/icons/ViewList"
+import Map from "@material-ui/icons/Map"
 
 export default function FooterNavigation() {
   return (

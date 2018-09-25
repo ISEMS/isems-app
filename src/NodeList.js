@@ -5,7 +5,10 @@ import "./NodeList.css";
 
 import {checkAll} from "./checks";
 import {Link} from "react-router-dom";
-import {BatteryAlert, Check, WatchLater, Error} from "@material-ui/icons";
+import BatteryAlert from "@material-ui/icons/BatteryAlert"
+import Check from "@material-ui/icons/Check"
+import WatchLater from "@material-ui/icons/WatchLater"
+import Error from "@material-ui/icons/Error"
 
 export function getStatus(data) {
   const messages = checkAll(data);
