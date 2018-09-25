@@ -1,6 +1,11 @@
 import { Component } from "react";
 import React from "react";
-import { VictoryLine, VictoryChart, VictoryZoomContainer } from "victory";
+import {
+  VictoryLine,
+  VictoryChart,
+  VictoryZoomContainer,
+  VictoryTheme
+} from "victory";
 import { getFormattedDate } from "./utils";
 
 import "./NodeCharts.css";
@@ -24,10 +29,16 @@ function TimeChart({ data, property }) {
   return (
     <VictoryChart
       scale={{ x: "time" }}
+      theme={VictoryTheme.material}
       domainPadding={{ y: 10 }}
       containerComponent={<VictoryZoomContainer />}
     >
-      <VictoryLine data={chartData} />
+      <VictoryLine
+        data={chartData}
+        style={{
+          data: { stroke: "#ff8115" },
+        }}
+      />
     </VictoryChart>
   );
 }
