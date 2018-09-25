@@ -18,9 +18,11 @@
     "react-leaflet": "^2.0.0-beta.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "source-map-explorer": "^1.6.0",
     "victory": "^30.0.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
