@@ -18,6 +18,10 @@ const fetchDetails = nodeId => {
     .then(json => json.measurements);
 };
 
+const myTheme = VictoryTheme.material;
+myTheme.axis.style.grid.stroke = "lightgray";
+myTheme.axis.style.grid.strokeDasharray = '10, 0';
+
 function TimeChart({ data, property }) {
   const chartData = data.map(measurement => {
     return {
@@ -29,7 +33,7 @@ function TimeChart({ data, property }) {
   return (
     <VictoryChart
       scale={{ x: "time" }}
-      theme={VictoryTheme.material}
+      theme={myTheme}
       domainPadding={{ y: 10 }}
       containerComponent={<VictoryZoomContainer />}
     >
