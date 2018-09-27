@@ -1,12 +1,11 @@
 import React, {Component} from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
 
-import Notifications from "./Notifications";
 import NodeCharts from "./NodeCharts";
 import NodeList from "./NodeList";
 import NodeMap from "./Map";
 import FooterNavigation from "./FooterNavigation";
-import {fakefetchData, fetchData} from "./api";
+import {fetchData} from "./api";
 import "./App.css";
 import NodeDetails from "./NodeDetails";
 
@@ -15,7 +14,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nodes: []
+      nodes: [],
+      loadError: false,
     };
     this.setData = this.setData.bind(this);
   }
@@ -28,8 +28,7 @@ class App extends Component {
     fetchData()
       .then(this.setData)
       .catch(() => {
-        Notifications.info("Cannot load data, using example data");
-        return fakefetchData().then(this.setData);
+        this.setState({loadError: true});
       });
   }
 
@@ -47,7 +46,7 @@ class App extends Component {
             <NodeMap nodes={this.state.nodes} />
           </Route>
           <Route path="/list">
-            <NodeList nodes={this.state.nodes} />
+            <NodeList nodes={this.state.nodes} error={this.state.loadError} />
           </Route>
           <Route exact path="/details/:nodeId" component={NodeDetails} />
           <Route path="/details/:nodeId/charts" component={NodeCharts} />

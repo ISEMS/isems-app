@@ -3,12 +3,13 @@ import { get, find } from "lodash";
 
 import "./NodeList.css";
 
-import {checkAll} from "./checks";
-import {Link} from "react-router-dom";
-import BatteryAlert from "@material-ui/icons/BatteryAlert"
-import Check from "@material-ui/icons/Check"
-import WatchLater from "@material-ui/icons/WatchLater"
-import Error from "@material-ui/icons/Error"
+import { checkAll } from "./checks";
+import { Link } from "react-router-dom";
+import BatteryAlert from "@material-ui/icons/BatteryAlert";
+import Check from "@material-ui/icons/Check";
+import WatchLater from "@material-ui/icons/WatchLater";
+import Error from "@material-ui/icons/Error";
+import Loader from "./Loader";
 
 export function getStatus(data) {
   const messages = checkAll(data);
@@ -29,14 +30,14 @@ function getIcon(name) {
     timeOffset: <WatchLater />,
     solar_controller_communication: <Error />,
     batteryHealth: <BatteryAlert />,
-    batteryCapacity: <BatteryAlert />,
+    batteryCapacity: <BatteryAlert />
   };
   const defaultIcon = <Check />;
   return get(mapping, name, defaultIcon);
 }
 
-export function Node({ data, status}) {
-  const {name, type, message} = status;
+export function Node({ data, status }) {
+  const { name, type, message } = status;
   const icon = getIcon(name);
 
   return (
@@ -58,16 +59,26 @@ const errorsFirst = (firstNode, secondNode) => {
 };
 
 export default function NodeList(props) {
+  if (props.error) {
+    return (
+      <div>
+        <div className="load-error">
+          <Error />
+          Could not load data. Make sure your device can reach the data
+          collector.
+        </div>
+      </div>
+    );
+  }
+
+  if (!props.nodes.length) {
+    return <Loader>Loading nodes </Loader>;
+  }
+
   const nodes = props.nodes
     .map(getStatus)
     .sort(errorsFirst)
-    .map(n => (
-      <Node
-        key={n.data.nodeId}
-        data={n.data}
-        status={n.status}
-      />
-    ));
+    .map(n => <Node key={n.data.nodeId} data={n.data} status={n.status} />);
 
   return <ul className="nodeList">{nodes}</ul>;
 }
