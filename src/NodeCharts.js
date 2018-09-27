@@ -9,6 +9,7 @@ import {
 import { getFormattedDate } from "./utils";
 
 import "./NodeCharts.css";
+import Loader from "./Loader";
 
 const fetchDetails = nodeId => {
   const backendUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
@@ -89,13 +90,21 @@ export default class NodeCharts extends Component {
       this.state.measurements &&
       getFormattedDate(this.state.measurements[0].timestamp);
 
+
     return (
       <div className="node-charts">
         <h1> 24 hour statistics for {this.props.match.params.nodeId} </h1>
 
-        <aside>Latest measurement: {latestMeasurement}</aside>
+        {!charts?
+          <Loader>Loading...</Loader>
+          :
+          <React.Fragment>
+            <aside>Latest measurement: {latestMeasurement}</aside>
 
-        <div className="charts">{charts}</div>
+            <div className="charts">{charts}</div>
+          </React.Fragment>
+        }
+
       </div>
     );
   }
