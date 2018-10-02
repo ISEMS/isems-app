@@ -135,7 +135,7 @@ export function checkTemperature(data, statuses) {
       name: "temperature",
       message: `The battery is too cold (${
         data.batteryTemperature
-      }°C). Ideally it should not be below 25. Try adding some isolation.`
+      }°C). Ideally it should not be below -10°C. Try adding some isolation.`
     };
   }
   return {
