@@ -43,6 +43,14 @@ describe("checks", () => {
       ];
       expect(statuses).toEqual(expected);
     });
+
+    it("returns list with just one status", () => {
+      const statuses = checkServerStatus({ status: "0x040" });
+      const expected = [
+        "temp_sensor_not_connected",
+      ];
+      expect(statuses).toEqual(expected);
+    });
   });
 
   describe("checkBatteryHealth", () => {
