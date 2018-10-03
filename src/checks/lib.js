@@ -1,25 +1,14 @@
 import { DateTime } from "luxon";
-import { ary, filter, flatMap, partialRight } from "lodash";
-import { prettyTimeDifference, reverseString } from "../utils";
-
-const parseDecimal = ary(partialRight(parseInt, 10), 1);
-const stringToArray = ary(Array.from, 1);
+import { filter } from "lodash";
+import { prettyTimeDifference } from "../utils";
 
 const hexStatusToBitArray = statusCode => {
   // coverts hex value (e.g. 0x941) to list of bits
   // digit:     ___9___   ___4___   ___1___
-  // bit-value: 1 2 4 8   1 2 4 8   1 2 4 8
-  // binary:    1 0 0 1   0 0 1 0   1 0 0 0
-  // [ 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0 ]
-  const pattern = /0x([0-9a-f])([0-9a-f])([0-9a-f])/;
-  // eslint-disable-next-line
-  const [_match, ...parts] = statusCode.match(pattern);
-  const binaryParts = parts.map(digit => {
-    const littleEndian = parseInt(digit, 16).toString(2);
-    const bigEndian = reverseString(littleEndian);
-    return bigEndian.padEnd(4, "0");
-  });
-  return flatMap(binaryParts, stringToArray).map(parseDecimal);
+  // bit-value: 8 4 2 1   8 4 2 1   8 4 2 1
+  // binary:    1 0 0 1   0 1 0 0   0 0 0 1
+  // [ 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1 ]
+  return parseInt(statusCode, 16).toString(2).padStart(12, "0").split("").map(x => parseInt(x, 10));
 };
 
 export function checkServerStatus(data) {

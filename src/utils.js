@@ -5,13 +5,7 @@ const getFormattedDate = timestamp => {
   return dt.toLocaleString(DateTime.DATETIME_SHORT);
 };
 
-const reverseString = s =>
-  s
-    .split("")
-    .reverse()
-    .join("");
-
-export { getFormattedDate, reverseString };
+export { getFormattedDate };
 
 export function prettyTimeDifference(time, reference) {
   const differenceDays = time.diff(reference, "days").toObject().days;

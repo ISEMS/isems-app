@@ -16,8 +16,8 @@ describe("checks", () => {
     it("returns expected array", () => {
       // prettier-ignore
       const expected = [ 1, 0, 0, 1,   // 9
-                         0, 0, 1, 0,   // 4
-                         1, 0, 0, 0 ]; // 1
+                         0, 1, 0, 0,   // 4
+                         0, 0, 0, 1 ]; // 1
 
       expect(hexStatusToBitArray("0x941")).toEqual(expected);
     });
@@ -25,8 +25,8 @@ describe("checks", () => {
     it("returns expected array for 2 digit numbers", () => {
       // prettier-ignore
       const expected = [ 0, 0, 0, 0,   // 0
-                         1, 1, 1, 0,   // 7
-                         0, 1, 0, 0 ]; // 2
+                         0, 1, 1, 1,   // 7
+                         0, 0, 1, 0 ]; // 2
 
       expect(hexStatusToBitArray("0x072")).toEqual(expected);
     });
@@ -38,8 +38,8 @@ describe("checks", () => {
       const expected = [
         "charging",
         "healthy",
-        "temp_sensor_not_connected",
-        "batter_overheating"
+        "energy_capacity_too_small",
+        null
       ];
       expect(statuses).toEqual(expected);
     });
@@ -47,7 +47,16 @@ describe("checks", () => {
     it("returns list with just one status", () => {
       const statuses = checkServerStatus({ status: "0x040" });
       const expected = [
-        "temp_sensor_not_connected",
+        "energy_capacity_too_small",
+      ];
+      expect(statuses).toEqual(expected);
+    });
+
+    it("returns correct statues when individual digits ar zero padded", () => {
+      const statuses = checkServerStatus({ status: "0x440" });
+      const expected = [
+        "discharging",
+        "energy_capacity_too_small"
       ];
       expect(statuses).toEqual(expected);
     });
