@@ -6,7 +6,7 @@ import NodeList from "./NodeList";
 import NodeMap from "./Map";
 import FooterNavigation from "./FooterNavigation";
 import {fetchData} from "./api";
-import "./App.css";
+import "./App.sass";
 import NodeDetails from "./NodeDetails";
 
 

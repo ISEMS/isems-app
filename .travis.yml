@@ -10,7 +10,6 @@ install:
   - yarn global add greenkeeper-lockfile@1
 before_script:
   - greenkeeper-lockfile-update
-  - npm run build-css
 script:
   - npm test -- --coverage
 after_script:

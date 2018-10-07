@@ -8,7 +8,7 @@ import {
 } from "victory";
 import { getFormattedDate } from "./utils";
 
-import "./NodeCharts.css";
+import "./NodeCharts.sass";
 import Loader from "./Loader";
 
 const fetchDetails = nodeId => {
