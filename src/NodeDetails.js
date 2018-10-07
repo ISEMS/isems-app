@@ -6,7 +6,7 @@ import Error from "@material-ui/icons/Error"
 
 import { groupBy, remove } from "lodash";
 
-import "./NodeDetails.css";
+import "./NodeDetails.sass";
 import { Link } from "react-router-dom";
 import { checkAll } from "./checks";
 import { fetchDetails } from "./api";

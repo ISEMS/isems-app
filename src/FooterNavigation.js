@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./FooterNavigation.css"
+import "./FooterNavigation.sass"
 import {NavLink} from "react-router-dom";
 import ViewList from "@material-ui/icons/ViewList"
 import Map from "@material-ui/icons/Map"

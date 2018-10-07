@@ -1,7 +1,7 @@
 import React from "react";
 import { get, find } from "lodash";
 
-import "./NodeList.css";
+import "./NodeList.sass";
 
 import { checkAll } from "./checks";
 import { Link } from "react-router-dom";
