@@ -22,7 +22,7 @@
     "victory": "^33.0.5"
   },
   "scripts": {
-    "analyze": "source-map-explorer build/static/js/main.*",
+    "analyze": "source-map-explorer build/static/js/*.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
