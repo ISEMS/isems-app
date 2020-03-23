@@ -1,4 +1,4 @@
-# ISEMS-App [![Build Status](https://travis-ci.com/ISEMS/isems-app.svg?branch=master)](https://travis-ci.com/ISEMS/isems-app) [![codecov](https://codecov.io/gh/ISEMS/isems-app/branch/master/graph/badge.svg)](https://codecov.io/gh/ISEMS/isems-app) [![Greenkeeper badge](https://badges.greenkeeper.io/ISEMS/isems-app.svg)](https://greenkeeper.io/)
+# ISEMS-App [![Build Status](https://travis-ci.com/ISEMS/isems-app.svg?branch=master)](https://travis-ci.com/ISEMS/isems-app) [![codecov](https://codecov.io/gh/ISEMS/isems-app/branch/master/graph/badge.svg)](https://codecov.io/gh/ISEMS/isems-app) 
 
 This is the frontend for the ISEMS project. It's goal is to provide information about the health of 
 a solar mesh network in an easily understandable way.
