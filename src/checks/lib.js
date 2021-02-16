@@ -38,7 +38,7 @@ export function checkTime(data) {
     return {
       name: "timeOffset",
       type: "critical",
-      message: `The module did not send data since ${differenceDays.toFixed(
+      message: `The module did not send data for ${differenceDays.toFixed(
         0
       )} days.`
     };
