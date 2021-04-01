@@ -16,20 +16,31 @@ class App extends Component {
     this.state = {
       nodes: [],
       loadError: false,
+      showsInactiveNodes: false,
     };
     this.setData = this.setData.bind(this);
+    this.showInactiveNodes = this.showInactiveNodes.bind(this);
   }
 
   setData(nodes) {
     this.setState({ nodes });
   }
 
+  loadNodes(loadAll) {
+    fetchData(loadAll)
+        .then(this.setData)
+        .catch(() => {
+          this.setState({loadError: true});
+        });
+  }
+
+  showInactiveNodes() {
+    this.loadNodes(true);
+    this.setState({showsInactiveNodes: true})
+  }
+
   componentDidMount() {
-    fetchData()
-      .then(this.setData)
-      .catch(() => {
-        this.setState({loadError: true});
-      });
+    this.loadNodes(false)
   }
 
   render() {
@@ -46,7 +57,11 @@ class App extends Component {
             <NodeMap nodes={this.state.nodes} />
           </Route>
           <Route path="/list">
-            <NodeList nodes={this.state.nodes} error={this.state.loadError} />
+            <NodeList nodes={this.state.nodes}
+                      error={this.state.loadError}
+                      onLoadAllNodes={this.showInactiveNodes}
+                      showsInactiveNodes={this.state.showsInactiveNodes}
+            />
           </Route>
           <Route exact path="/details/:nodeId" component={NodeDetails} />
           <Route path="/details/:nodeId/charts" component={NodeCharts} />

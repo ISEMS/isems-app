@@ -1,6 +1,9 @@
-const fetchData = () => {
+const fetchData = (loadAll=false) => {
   const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
-  const url = `${baseUrl}/measurements/latest`;
+  let url = `${baseUrl}/measurements/latest`;
+  if (loadAll) {
+    url += "?all=true"
+  }
   return fetch(url)
   .then(response => response.json())
   .then(json => json.measurements);
