@@ -80,5 +80,13 @@ export default function NodeList(props) {
     .sort(errorsFirst)
     .map(n => <Node key={n.data.nodeId} data={n.data} status={n.status} />);
 
-  return <ul className="nodeList">{nodes}</ul>;
+  return <div className="nodeListContainer">
+    <ul className="nodeList">{nodes}</ul>
+    {props.showsInactiveNodes ? null :
+        <button className="showInactiveButton"
+                onClick={props.onLoadAllNodes}>
+          Also show inactive nodes
+        </button>
+    }
+  </div>;
 }
