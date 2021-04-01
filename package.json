@@ -17,7 +17,7 @@
     "react-dom": "16.13.1",
     "react-leaflet": "^2.0.0-beta.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "4.0.3",
     "source-map-explorer": "^2.4.2",
     "victory": "^34.2.0"
   },
