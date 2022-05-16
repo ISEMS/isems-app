@@ -38,18 +38,17 @@ export function checkTime(data) {
     return {
       name: "timeOffset",
       type: "critical",
-      message: `The module did not send data for ${differenceDays.toFixed(
-        0
-      )} days.`
+      messageKey: "noDataForDays",
+      payload: {days: differenceDays.toFixed( 0 )},
     };
   }
   const timeSince = prettyTimeDifference(now, measurementTime);
   return {
     name: "timeOffset",
     type: "info",
-    message: `The module is sending data. The latest transmission was ${
-      timeSince.count
-    } ${timeSince.unit} ago.`
+    messageKey: "sendingData",
+    payload: {count: timeSince.count, unit: timeSince.unit},
+
   };
 }
 
@@ -58,7 +57,7 @@ export function checkBatteryHealth(data, statuses) {
     return {
       type: "warning",
       name: "batteryHealth",
-      message: `The battery capacity level is low. It might need to be replaced.`
+      messageKey: "batteryLevelLow"
     };
   }
 }
@@ -71,7 +70,7 @@ export function checkCharge(data, statuses) {
   if (statuses.includes("fully_charged")) {
     return {
       ...params,
-      message: "The battery is fully charged."
+      messageKey: "fullyCharged",
     };
   }
 
@@ -80,13 +79,15 @@ export function checkCharge(data, statuses) {
   if (statuses.includes("charging")) {
     return {
       ...params,
-      message: `The battery is charging. The current charge is approximately ${chargePercentage}%`
+      messageKey: "charging",
+      payload: {chargePercentage}
     };
   }
   if (statuses.includes("discharging")) {
     return {
       ...params,
-      message: `The battery is discharging. The current charge is approximately ${chargePercentage}%`
+      messageKey: "discharging",
+      payload: {chargePercentage}
     };
   }
 }
@@ -96,7 +97,7 @@ export function checkCapacity(data, statuses) {
     return {
       type: "error",
       name: "batteryCapacity",
-      message: `The battery does not hold enough charge. You might have to install a bigger one.`
+      messageKey: "lowBatteryCapacity"
     };
   }
 }
@@ -106,31 +107,31 @@ export function checkTemperature(data, statuses) {
     return {
       type: "warning",
       name: "temperature",
-      message: `The battery temperature sensor is not connected. Connect it to make sure to get more information.`
+      messageKey: "noTemperatureSensor"
     };
   }
   if (statuses.includes("battery_overheating")) {
     return {
       type: "warning",
       name: "temperature",
-      message: `The battery is overheating (${
-        data.batteryTemperature
-      }°C). Try moving it to a cooler place or increasing ventilation.`
+      messageKey: "overheating",
+      payload: {batteryTemperature: data.batteryTemperature}
     };
   }
   if (statuses.includes("low_battery_temperature")) {
     return {
       type: "warning",
       name: "temperature",
-      message: `The battery is too cold (${
-        data.batteryTemperature
-      }°C). Ideally it should not be below -10°C. Try adding some isolation.`
+      messageKey: "tooCold",
+      payload: {batteryTemperature: data.batteryTemperature}
+
     };
   }
   return {
     type: "info",
     name: "temperature",
-    message: `The battery temperature is OK (${data.batteryTemperature} °C).`
+    messageKey: "ok",
+    payload: {batteryTemperature: data.batteryTemperature}
   };
 }
 
@@ -139,13 +140,13 @@ export function checkSolarControllerCommunication(data, statuses) {
     return {
       type: "critical",
       name: "solar_controller_communication",
-      message: `Cannot communicate with solar controller. Make sure the devices are properly connected.`
+      messageKey: "error"
     };
   }
   return {
     type: "info",
     name: "solar_controller_communication",
-    message: `Communication with solar controller successfully established.`
+    messageKey: "ok"
   };
 }
 

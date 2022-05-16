@@ -4,8 +4,11 @@ import "./FooterNavigation.sass"
 import {NavLink} from "react-router-dom";
 import ViewList from "@material-ui/icons/ViewList"
 import Map from "@material-ui/icons/Map"
+import {useTranslation} from "react-i18next";
 
 export default function FooterNavigation() {
+  const {t} = useTranslation();
+
   return (
     <nav className="footerNavigation">
       <ul>
@@ -13,7 +16,7 @@ export default function FooterNavigation() {
           <NavLink to="/list" activeClassName="active">
             <ViewList />
             <div>
-              List
+              {t('navigation.list')}
             </div>
           </NavLink>
         </li>
@@ -21,7 +24,7 @@ export default function FooterNavigation() {
           <NavLink to="/map" activeClassName="active">
             <Map/>
             <div>
-              Map
+              {t('navigation.map')}
             </div>
           </NavLink>
         </li>

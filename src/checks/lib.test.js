@@ -6,7 +6,7 @@ import {
   checkSolarControllerCommunication,
   checkTemperature,
   checkTime,
-  hexStatusToBitArray
+  hexStatusToBitArray,
 } from "./lib";
 
 import { Settings } from "luxon";
@@ -39,25 +39,20 @@ describe("checks", () => {
         "charging",
         "healthy",
         "energy_capacity_too_small",
-        null
+        null,
       ];
       expect(statuses).toEqual(expected);
     });
 
     it("returns list with just one status", () => {
       const statuses = checkServerStatus({ status: "0x040" });
-      const expected = [
-        "energy_capacity_too_small",
-      ];
+      const expected = ["energy_capacity_too_small"];
       expect(statuses).toEqual(expected);
     });
 
     it("returns correct statues when individual digits ar zero padded", () => {
       const statuses = checkServerStatus({ status: "0x440" });
-      const expected = [
-        "discharging",
-        "energy_capacity_too_small"
-      ];
+      const expected = ["discharging", "energy_capacity_too_small"];
       expect(statuses).toEqual(expected);
     });
   });
@@ -80,25 +75,21 @@ describe("checks", () => {
       const info = checkCharge({}, ["fully_charged"]);
       expect(info.name).toBe("charge");
       expect(info.type).toBe("info");
-      expect(info.message).toBe("The battery is fully charged.");
+      expect(info.messageKey).toBe("fullyCharged");
     });
 
     it("shows charging info", () => {
       const info = checkCharge({ batteryChargeEstimate: 10 }, ["charging"]);
       expect(info.name).toBe("charge");
       expect(info.type).toBe("info");
-      expect(info.message).toEqual(
-        expect.stringContaining("The battery is charging")
-      );
+      expect(info.messageKey).toBe("charging");
     });
 
     it("shows discharging info", () => {
       const info = checkCharge({ batteryChargeEstimate: 10 }, ["discharging"]);
       expect(info.name).toBe("charge");
       expect(info.type).toBe("info");
-      expect(info.message).toEqual(
-        expect.stringContaining("The battery is discharging")
-      );
+      expect(info.messageKey).toBe("discharging");
     });
   });
 
@@ -126,28 +117,28 @@ describe("checks", () => {
       const info = checkTemperature({}, ["battery_overheating"]);
       expect(info.type).toBe("warning");
       expect(info.name).toBe("temperature");
-      expect(info.message).toEqual(expect.stringContaining("is overheating"));
+      expect(info.messageKey).toBe("overheating");
     });
 
     it("returns warning if battery is too cold", () => {
       const info = checkTemperature({}, ["low_battery_temperature"]);
       expect(info.type).toBe("warning");
       expect(info.name).toBe("temperature");
-      expect(info.message).toEqual(expect.stringContaining("is too cold"));
+      expect(info.messageKey).toBe("tooCold");
     });
 
     it("returns info if everything is fine", () => {
       const info = checkTemperature({ batteryTemperature: 29 }, []);
       expect(info.type).toBe("info");
       expect(info.name).toBe("temperature");
-      expect(info.message).toEqual("The battery temperature is OK (29 °C).");
+      expect(info.messageKey).toBe("ok");
     });
   });
 
   describe("checkSolarControllerCommunication", () => {
     it("returns error if communication with solar controller is not possible", () => {
       const info = checkSolarControllerCommunication({}, [
-        "no_solar_communication"
+        "no_solar_communication",
       ]);
       expect(info.type).toBe("critical");
       expect(info.name).toBe("solar_controller_communication");

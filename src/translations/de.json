@@ -1,0 +1,65 @@
+{
+  "globals": {
+    "loading": "Lädt",
+    "batteryCharge": "Batterieladung",
+    "details": "Details",
+    "date": "Datum"
+  },
+  "navigation": {
+    "list": "Liste",
+    "map": "Karte"
+  },
+  "nodeList": {
+    "loadError": "Daten konnten nicht gealaden werden. Stelle sicher, dass dein Gerät den Datensammler erreichen kann.",
+    "showInactive": "Auch inaktive Module anzeigen",
+    "loadingNodes": "Lade Module"
+  },
+  "status": {
+    "ok": {
+      "ok": "Keine Probleme gefunden."
+    },
+    "timeOffset": {
+      "noDataForDays": "Das Modul hat seit {{days}} Tagen keine Daten mehr geschickt.",
+      "sendingData": "Das Modul sendet Daten. Die letzte Übertragung ist {{count}} {{unit}} her."
+    },
+    "batteryHealth": {
+      "batteryLevelLow": "Die Batteriekapazität ist gering. Eventuell muss die Batterie ersetzt werden."
+    },
+    "charge": {
+      "fullyCharged": "Die Batterie ist voll geladen.",
+      "charging": "Die Batterie lädt. Der aktuelle Ladestand beträgt ungefähr {{chargePercentage}}%.",
+      "discharging": "Die Batterie entlädt. Der aktuelel Ladestand beträgt ungefähr {{chargePercentage}}%."
+    },
+    "batteryCapacity": {
+      "lowBatteryCapacity": "Die Batterie hat nicht genug Kapzität. Du solltest eventuell eine größere installieren."
+    },
+    "temperature": {
+      "noTemperatureSensor": "Der Temperatursensor ist nicht mit der Batterie verbunden. Installiere einen, um mehr Informationen zu erhalten.",
+      "overheating": "Die Batterie ist zu heiß ({{ batteryTemperature }} °C). Bewege sie an einen kälteren Ort oder belüfte sie besser..",
+      "tooCold": " Die Batterie ist zu kalt ({{ batteryTemperature }} °C). Idealerweise sollte sie nicht unter -10°C liegen. Dämme deine Batterie..",
+      "ok": "Die Batterietemperatur ist in Ordnung ({{batteryTemperature}} °C)."
+    },
+    "solar_controller_communication": {
+      "error": "Verbindung zum Solarladeregler fehlgeschlagen. Stelle sicher, dass die Geräte richtig verbunden sind.",
+      "ok": "Verbindung zum Solarladeregler besteht."
+    }
+  },
+  "nodeCharts": {
+    "heading": "24 Stunden Metriken für {{nodeId}}",
+    "latestMeasurement": "Letze Messung: {{date}}"
+  },
+  "charts": {
+    "batteryVoltage": "Batteriespannung",
+    "batteryChargeEstimate": "Ungefährer Batterieladestand",
+    "mppVoltage": "MPP Spannung",
+    "batteryTemperature": "Batterietemperatur",
+    "openCircuitVoltage": "Leerspannung"
+  },
+  "nodeDetails": {
+    "showCharts": "Graphen anzeigen",
+    "critical": {
+      "heading": "Diese Nachricht ist kritisch.",
+      "body": "Wir können daher keine weitern Nachrichten zu diesem Modul anzeigen."
+    }
+  }
+}

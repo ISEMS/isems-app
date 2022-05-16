@@ -10,6 +10,7 @@ import Check from "@material-ui/icons/Check";
 import WatchLater from "@material-ui/icons/WatchLater";
 import Error from "@material-ui/icons/Error";
 import Loader from "./Loader";
+import {useTranslation} from "react-i18next";
 
 export function getStatus(data) {
   const messages = checkAll(data);
@@ -19,7 +20,7 @@ export function getStatus(data) {
   const okStatus = {
     type: "info",
     name: "ok",
-    message: "Everything is fine!"
+    messageKey: "ok"
   };
   const status = firstCritical || firstError || firstWarning || okStatus;
   return { status, data };
@@ -37,7 +38,8 @@ function getIcon(name) {
 }
 
 export function Node({ data, status }) {
-  const { name, type, message } = status;
+  const {t} = useTranslation();
+  const { name, type, messageKey, payload } = status;
   const icon = getIcon(name);
 
   return (
@@ -45,7 +47,7 @@ export function Node({ data, status }) {
       <Link to={`/details/${data.nodeId}`} className="wrapper">
         <span className="icon">{icon}</span>
         <div className="name"> {data.nodeId} </div>
-        <div className="status">{message}</div>
+        <div className="status">{t(`status.${name}.${messageKey}`, payload)}</div>
       </Link>
     </li>
   );
@@ -59,20 +61,21 @@ const errorsFirst = (firstNode, secondNode) => {
 };
 
 export default function NodeList(props) {
+  const {t} = useTranslation();
+
   if (props.error) {
     return (
       <div>
         <div className="load-error">
           <Error />
-          Could not load data. Make sure your device can reach the data
-          collector.
+          {t("nodeList.loadError")}
         </div>
       </div>
     );
   }
 
   if (!props.nodes.length) {
-    return <Loader>Loading nodes </Loader>;
+    return <Loader>{t("nodeList.loadingNodes")}</Loader>;
   }
 
   const nodes = props.nodes
@@ -85,7 +88,7 @@ export default function NodeList(props) {
     {props.showsInactiveNodes ? null :
         <button className="showInactiveButton"
                 onClick={props.onLoadAllNodes}>
-          Also show inactive nodes
+          {t("nodeList.showInactive")}
         </button>
     }
   </div>;
