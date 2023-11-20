@@ -17,7 +17,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^5.0.1",
     "source-map-explorer": "^2.4.2",
-    "victory": "^34.3.12"
+    "victory": "^36.6.12"
   },
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
