@@ -1,0 +1,65 @@
+{
+  "globals": {
+    "loading": "Loading...",
+    "batteryCharge": "battery charge",
+    "details": "details",
+    "date": "date"
+  },
+  "navigation": {
+    "list": "List",
+    "map": "Map"
+  },
+  "nodeList": {
+    "loadError": " Could not load data. Make sure your device can reach the data collector.",
+    "showInactive": "Also show inactive nodes",
+    "loadingNodes": "Loading nodes"
+  },
+  "status": {
+    "ok": {
+      "ok": "Everything is fine."
+    },
+    "timeOffset": {
+      "noDataForDays": "The module did not send data for {{days}} days.",
+      "sendingData": "The module is sending data. The latest transmission was {{count}} {{unit}} ago."
+    },
+    "batteryHealth": {
+      "batteryLevelLow": "The battery capacity level is low. It might need to be replaced."
+    },
+    "charge": {
+      "fullyCharged": "The battery is fully charged.",
+      "charging": "The battery is charging. The current charge is approximately {{chargePercentage}}%.",
+      "discharging": "The battery is discharging. The current charge is approximately {{chargePercentage}}%."
+    },
+    "batteryCapacity": {
+      "lowBatteryCapacity": "The battery does not hold enough charge. You might have to install a bigger one."
+    },
+    "temperature": {
+      "noTemperatureSensor": "The battery temperature sensor is not connected. Connect it to make sure to get more information.",
+      "overheating": "The battery is overheating ({{ batteryTemperature }} °C). Try moving it to a cooler place or increasing ventilation.",
+      "tooCold": " The battery is too cold ({{ batteryTemperature }} °C). Ideally it should not be below -10°C. Try adding some isolation.",
+      "ok": "The battery temperature is OK ({{batteryTemperature}} °C)."
+    },
+    "solar_controller_communication": {
+      "error": "Cannot communicate with solar controller. Make sure the devices are properly connected.",
+      "ok": "Communication with solar controller successfully established"
+    }
+  },
+  "nodeCharts": {
+    "heading": "24 hour statistics for {{nodeId}}",
+    "latestMeasurement": "Latest measurement: {{date}}"
+  },
+  "charts": {
+    "batteryVoltage": "battery voltage",
+    "batteryChargeEstimate": "battery charge estimate",
+    "mppVoltage": "MPP voltage",
+    "batteryTemperature": "battery temperature",
+    "openCircuitVoltage": "open circuit voltage"
+  },
+  "nodeDetails": {
+    "showCharts": "show charts",
+    "critical": {
+      "heading": "This message is considered critical.",
+      "body": "Due to this we can not reliably show you any other information about this node."
+    }
+  }
+}

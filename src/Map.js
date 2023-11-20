@@ -6,6 +6,7 @@ import { getFormattedDate } from "./utils";
 import {Link} from "react-router-dom";
 
 import "leaflet/dist/leaflet.css";
+import {useTranslation} from "react-i18next";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -16,8 +17,10 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function NodeMap({ nodes }) {
+  const {t} = useTranslation();
+
   if (!nodes.length) {
-    return <div>Loading...</div>;
+    return <div>{t('globals.loading')}...</div>;
   }
 
   const markers = nodes
@@ -28,15 +31,15 @@ export default function NodeMap({ nodes }) {
           <div>
             <h1> {node.name}</h1>
             <div>
-              <span className="title">Datum:</span>
+              <span className="title">{t('globals.date')}:</span>
               {getFormattedDate(node.timestamp)}
             </div>
             <div>
-              <span className="title">Batterieladung:</span>
+              <span className="title">{t('globals.batteryCharge')}:</span>
               {node.batteryChargeEstimate}
             </div>
             <div>
-              <Link to={`/details/${node.nodeId}`}>Details</Link>
+              <Link to={`/details/${node.nodeId}`}>{t('globals.details')}</Link>
             </div>
           </div>
         </Popup>

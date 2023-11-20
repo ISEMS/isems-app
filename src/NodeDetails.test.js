@@ -1,6 +1,6 @@
 import React from "react";
 import { configure, mount, shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 
 import NodeDetails, {
   Message,
@@ -80,10 +80,16 @@ import { MemoryRouter } from "react-router-dom";
 
 describe("Message", () => {
   it("should render", async () => {
-    const status = { type: "error", message: "something is really wrong" };
+    const status = {
+      type: "error",
+      name: "batteryCapacity",
+      messageKey: "lowBatteryCapacity",
+    };
     const wrapper = shallow(<Message status={status} />);
     expect(wrapper.contains(<Error style={{ fill: "#FF4136" }} />)).toBe(true);
     expect(wrapper.contains(<Warning />)).toBe(false);
-    expect(wrapper.find("span").text()).toBe("something is really wrong");
+    expect(wrapper.find("span").text()).toBe(
+      "status.batteryCapacity.lowBatteryCapacity"
+    );
   });
 });

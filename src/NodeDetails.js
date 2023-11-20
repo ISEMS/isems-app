@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { checkAll } from "./checks";
 import { fetchDetails } from "./api";
 import Loader from "./Loader";
+import {useTranslation} from "react-i18next";
 
 function getIcon(type) {
   const mapping = {
@@ -23,10 +24,13 @@ function getIcon(type) {
 }
 
 export function Message({ status }) {
+  const {t} = useTranslation();
+  const {messageKey, payload, name} = status;
+
   const icon = getIcon(status.type);
   return (
     <li>
-      {icon} <span>{status.message}</span>
+      {icon} <span>{t(`status.${name}.${messageKey}`, payload)}</span>
     </li>
   );
 }
@@ -42,6 +46,8 @@ export function MessageList({ messages }) {
 }
 
 export function MessageGroups({ displayMessages }) {
+  const {t} = useTranslation();
+
   const timeMessages = remove(
     displayMessages.info,
     (message) => message.name === "timeOffset"
@@ -54,9 +60,8 @@ export function MessageGroups({ displayMessages }) {
         <MessageList messages={displayMessages.critical} />
 
         <div className="critical-explanation">
-          This message is considered critical. <br />
-          Due to this we can not reliably show you any other information about
-          this node.
+          <div> {t('nodeDetails.critical.heading')} </div>
+          {t('nodeDetails.critical.body')}
         </div>
       </React.Fragment>
     );
@@ -74,6 +79,7 @@ export function MessageGroups({ displayMessages }) {
 }
 
 export default function NodeDetails({ match }) {
+  const {t} = useTranslation();
   const [measurements, setMeasurements] = useState();
 
   useEffect(() => {
@@ -97,11 +103,11 @@ export default function NodeDetails({ match }) {
         </div>
       ) : (
         <Loader>
-          <div style={{ textAlign: "center" }}>Loading...</div>
+          <div style={{ textAlign: "center" }}>{t('globals.loading')}</div>
         </Loader>
       )}
 
-      <Link to={`/details/${match.params.nodeId}/charts`}>Show charts</Link>
+      <Link to={`/details/${match.params.nodeId}/charts`}>{t('nodeDetails.showCharts')}</Link>
     </div>
   );
 }
