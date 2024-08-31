@@ -20,18 +20,23 @@
     "victory": "^36.6.12"
   },
   "devDependencies": {
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@vitejs/plugin-react": "^4.3.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "enzyme": "^3.4.4",
-    "node-sass": "9.0.0",
     "prettier": "^2.6.2",
-    "source-map-explorer": "^2.4.2"
+    "sass-embedded": "^1.77.8",
+    "source-map-explorer": "^2.4.2",
+    "vite": "^5.2.13"
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/*.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "vite",
+    "build": "vite build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "vite"
   },
   "browserslist": [
     ">0.2%",
