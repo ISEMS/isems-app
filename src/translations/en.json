@@ -5,6 +5,10 @@
     "details": "details",
     "date": "date"
   },
+  "deprecationBanner": {
+    "title": "This project is no longer being actively maintained" ,
+    "copy": "The backend servers have been shut down. This instance is only showing fake exemplary data now. You can find more information about the overall project status on <0>isems.de</0>"
+  },
   "navigation": {
     "list": "List",
     "map": "Map"
