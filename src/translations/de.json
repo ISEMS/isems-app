@@ -5,12 +5,16 @@
     "details": "Details",
     "date": "Datum"
   },
+  "deprecationBanner": {
+    "title": "Dieses Projekt wird nicht mehr weiterentwickelt." ,
+    "copy": "Die Backend-Server wurden abgeschaltet. Diese Instanz zeigt nur noch Beispieldaten. Du findest mehr Informationen zum gesamten ISEMS-Projekt auf <0>isems.de</0>"
+  },
   "navigation": {
     "list": "Liste",
     "map": "Karte"
   },
   "nodeList": {
-    "loadError": "Daten konnten nicht gealaden werden. Stelle sicher, dass dein Gerät den Datensammler erreichen kann.",
+    "loadError": "Daten konnten nicht geladen werden. Stelle sicher, dass dein Gerät den Datensammler erreichen kann.",
     "showInactive": "Auch inaktive Module anzeigen",
     "loadingNodes": "Lade Module"
   },

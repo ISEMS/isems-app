@@ -1,13 +1,15 @@
-import React, {Component} from "react";
-import {Redirect, Route, Switch} from "react-router-dom";
+import React, { Component } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import NodeCharts from "./NodeCharts";
 import NodeList from "./NodeList";
 import NodeMap from "./Map";
 import FooterNavigation from "./FooterNavigation";
-import {fetchData} from "./api";
+import { fetchData } from "./api";
 import "./App.sass";
 import NodeDetails from "./NodeDetails";
+import { t } from "i18next";
+import { Trans } from "react-i18next";
 
 class App extends Component {
   constructor(props) {
@@ -25,12 +27,12 @@ class App extends Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
-    this.loadNodes(false)
-    window.addEventListener('resize', this.updateWindowDimensions);
+    this.loadNodes(false);
+    window.addEventListener("resize", this.updateWindowDimensions);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
+    window.removeEventListener("resize", this.updateWindowDimensions);
   }
 
   updateWindowDimensions() {
@@ -43,20 +45,29 @@ class App extends Component {
 
   loadNodes(loadAll) {
     fetchData(loadAll)
-        .then(this.setData)
-        .catch(() => {
-          this.setState({loadError: true});
-        });
+      .then(this.setData)
+      .catch(() => {
+        this.setState({ loadError: true });
+      });
   }
 
   showInactiveNodes() {
     this.loadNodes(true);
-    this.setState({showsInactiveNodes: true})
+    this.setState({ showsInactiveNodes: true });
   }
 
   render() {
     return (
       <div className="App">
+        <div className="alert">
+          <h2>{t("deprecationBanner.title")}</h2>
+          <p>
+            <Trans
+              i18nKey="deprecationBanner.copy"
+              components={[<a href="https://isems.de" />]}
+            />
+          </p>
+        </div>
         <header className="App-header">
           <h1>ISEMS Management</h1>
         </header>
@@ -68,25 +79,28 @@ class App extends Component {
             <NodeMap nodes={this.state.nodes} />
           </Route>
           <Route path="/list">
-            <NodeList nodes={this.state.nodes}
-                      error={this.state.loadError}
-                      onLoadAllNodes={this.showInactiveNodes}
-                      showsInactiveNodes={this.state.showsInactiveNodes}
+            <NodeList
+              nodes={this.state.nodes}
+              error={this.state.loadError}
+              onLoadAllNodes={this.showInactiveNodes}
+              showsInactiveNodes={this.state.showsInactiveNodes}
             />
           </Route>
-            <Route path="/details/:nodeId">
-                  <div className="multiCol">
-                    {this.state.width > 700 &&
-                    <NodeList nodes={this.state.nodes}
-                              error={this.state.loadError}
-                              onLoadAllNodes={this.showInactiveNodes}
-                              showsInactiveNodes={this.state.showsInactiveNodes}
-                    /> }
+          <Route path="/details/:nodeId">
+            <div className="multiCol">
+              {this.state.width > 700 && (
+                <NodeList
+                  nodes={this.state.nodes}
+                  error={this.state.loadError}
+                  onLoadAllNodes={this.showInactiveNodes}
+                  showsInactiveNodes={this.state.showsInactiveNodes}
+                />
+              )}
 
-                    <Route exact path="/details/:nodeId" component={NodeDetails} />
-                    <Route path="/details/:nodeId/charts" component={NodeCharts} />
-                  </div>
-            </Route>
+              <Route exact path="/details/:nodeId" component={NodeDetails} />
+              <Route path="/details/:nodeId/charts" component={NodeCharts} />
+            </div>
+          </Route>
         </Switch>
         <FooterNavigation />
       </div>

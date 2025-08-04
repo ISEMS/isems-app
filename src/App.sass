@@ -1,9 +1,20 @@
+@import "colors.sass"
+
 .App
   display: grid
-  grid-template-rows: auto 1fr auto
+  grid-template-rows: auto auto 1fr auto
 
 .App > div
   overflow: auto
+
+.alert
+  padding: 10px
+  border-left: 10px solid $orange
+  background-color: $yellow
+  h2
+    margin: 0
+  p
+    margin: 5px 0
 
 .App-header
   background-color: #222
